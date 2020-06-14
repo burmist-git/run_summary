@@ -1,0 +1,15 @@
+*~
+.#*
+rawdata
+rootdata
+pushStructInRoot
+obj/
+pcstatlog_arichxx/
+pdf_eps/
+rootFileAna-util/
+slacExperiment_USBWC-CRT_fTOF_SuperB/
+rootFileList.dat
+exp_7.Luminosity
+exp_8.Luminosity
+read_arich_run_summary_xml
+runmdstana

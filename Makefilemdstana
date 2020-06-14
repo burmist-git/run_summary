@@ -1,0 +1,35 @@
+ROOTCFLAGS    = $(shell $(ROOTSYS)/bin/root-config --cflags)
+ROOTLIBS      = $(shell $(ROOTSYS)/bin/root-config --libs)
+ROOTGLIBS     = $(shell $(ROOTSYS)/bin/root-config --glibs)
+
+LIBPUSHVEC=/home/burmist/home2/KEK/run_summary/pcstatlog_arichxx/obj/libpushVectorInRoot.so
+INCPUSHVEC=/home/burmist/home2/KEK/run_summary/pcstatlog_arichxx/
+
+CXX  = g++
+CXX += -I./	
+CXX += -I./obj/
+CXX += -I$(INCPUSHVEC)
+
+CXXFLAGS  = -g -Wall -fPIC -Wno-deprecated
+CXXFLAGS += $(ROOTCFLAGS)
+
+OUTLIB = ./obj/
+
+#----------------------------------------------------#
+
+all: runmdstana	
+
+runmdstana: runmdstana.cpp obj/mdstana.o obj/mdstanabase.o
+	$(CXX) -o runmdstana runmdstana.cpp $(OUTLIB)*.o $(LIBPUSHVEC) $(ROOTCFLAGS) $(ROOTLIBS) $(ROOTGLIBS)
+
+obj/mdstana.o: src/mdstana.cpp src/mdstana.hh obj/mdstanabase.o
+	$(CXX) $(CXXFLAGS) -c -I. -o $(OUTLIB)mdstana.o $<
+
+obj/mdstanabase.o: src/mdstanabase.cpp src/mdstanabase.hh
+	$(CXX) $(CXXFLAGS) -c -I. -o $(OUTLIB)mdstanabase.o $<
+
+clean:
+	rm -f runmdstana
+	rm -f *~
+	rm -f src/*~
+	rm -f $(OUTLIB)*.o
